@@ -18,7 +18,8 @@ public:
 	bool getValue(String section, String key, float &val);
 	bool getValue(String section, String key, bool &val);
 	
-	bool getValues(String section, String data[]);
+	bool getValues(String section, String **data, int *count);
+	
 private:
 	void close();
 	bool findSection(String section);
@@ -34,6 +35,7 @@ private:
 	bool isSectionStart(char c);
 	
 	char toLower(char c);
+	
 private:
 	mutable File m_file;
 	size_t m_pos;

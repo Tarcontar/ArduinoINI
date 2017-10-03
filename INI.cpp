@@ -75,12 +75,12 @@ bool INI::getValue(String section, String key, bool &val)
 	String v;
 	if (getValue(section, key, v))
 	{
-		if (match("True") || match("yes") || match("1"))
+		if (match("T") match("t") || match("Y") || match("y") || match("1"))
 		{
 			val = true;
 			return true;
 		}
-		if (match("false") || match("no") || match("0"))
+		if (match("F") || match("f") || match("N") || match("n") || match("0"))
 		{
 			val = false;
 			return true;
@@ -89,12 +89,12 @@ bool INI::getValue(String section, String key, bool &val)
 	return false;
 }
 
-bool INI::getValues(String section, String data[])
+bool INI::getValues(String section, String **data, int *count)
 {
+	*count = 0;
 	if (findSection(section))
 	{
 		int i = 0;
-		int count = 0;
 		int pos = m_pos; //save position of found section
 		while(readLine())
 		{
@@ -105,9 +105,9 @@ bool INI::getValues(String section, String data[])
 			}
 			//make sure we add no empty lines !!!
 			if (m_buffer[m_buffPos] != '\0')
-				count++;
+				(*count)++;
 		}
-		//data = new String[count];
+		*data = new String[*count];
 		m_pos = pos;
 		while(readLine())
 		{
@@ -122,8 +122,7 @@ bool INI::getValues(String section, String data[])
 				if (m_buffPos < BUFFER_SIZE - 1)
 					m_buffPos++;
 				skipWhiteSpaces();
-				Serial.println(&m_buffer[m_buffPos]);
-				data[i++] = String(&m_buffer[m_buffPos]);
+				(*data)[i++] = String(&m_buffer[m_buffPos]);
 			}
 		}
 		return true;
