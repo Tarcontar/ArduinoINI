@@ -75,7 +75,7 @@ bool INI::getValue(String section, String key, bool &val)
 	String v;
 	if (getValue(section, key, v))
 	{
-		if (match("T") match("t") || match("Y") || match("y") || match("1"))
+		if (match("T") || match("t") || match("Y") || match("y") || match("1"))
 		{
 			val = true;
 			return true;
