@@ -1,4 +1,4 @@
-#include "INI.h"
+#include "INI.hpp"
 #include <string.h>
 
 INI::INI(bool caseSensitive) : m_caseSensitive(caseSensitive)
