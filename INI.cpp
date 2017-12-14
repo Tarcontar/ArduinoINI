@@ -17,6 +17,41 @@ bool INI::open(String filename)
 	m_file = SD.open(filename, FILE_READ);
 }
 
+void INI::writeSection(String section)
+{
+	m_file.print("[");
+	m_file.print(section);
+	m_file.print("]");
+	m_file.println();
+}
+
+void INI::write(String key, String val)
+{
+	m_file.print(key);
+	m_file.print(" = ");
+	m_file.print(val);
+	m_file.println();
+}
+
+void INI::write(String key, int val)
+{
+	m_file.print(key);
+	m_file.print(" = ");
+	m_file.print(val);
+	m_file.println();
+}
+
+void INI::write(String key, bool val)
+{
+	m_file.print(key);
+	m_file.print(" = ");
+	if (val)
+		m_file.print("true");
+	else
+		m_file.print("false");
+	m_file.println();
+}
+
 bool INI::getValue(String section, String key, String &val)
 {
 	if (findSection(section))

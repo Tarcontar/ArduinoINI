@@ -12,6 +12,12 @@ public:
 	~INI();
 	
 	bool open(String filename);
+	
+	void writeSection(String section);
+	void write(String key, String val);
+	void write(String key, int val);
+	void write(String key, bool val);
+	
 	bool getValue(String section, String key, String &val);
 	bool getValue(String section, String key, int &val);
 	bool getValue(String section, String key, unsigned long &val);
