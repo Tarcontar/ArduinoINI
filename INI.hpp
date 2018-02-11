@@ -11,12 +11,13 @@ public:
 	INI(bool caseSensitive = false);
 	~INI();
 	
-	bool open(String filename);
+	bool open(String filename, uint8_t mode);
 	
 	void writeSection(String section);
 	void write(String key, String val);
 	void write(String key, int val);
 	void write(String key, bool val);
+	void write(String key, const char *val);
 	
 	bool getValue(String section, String key, String &val);
 	bool getValue(String section, String key, int &val);
@@ -26,8 +27,8 @@ public:
 	
 	bool getValues(String section, String **data, int *count);
 	
-private:
 	void close();
+private:
 	bool findSection(String section);
 	bool findKey(String key, String &val);
 	bool readLine();

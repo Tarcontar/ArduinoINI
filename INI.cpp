@@ -11,10 +11,10 @@ INI::~INI()
 	close();
 }
 
-bool INI::open(String filename)
+bool INI::open(String filename, uint8_t mode)
 {
 	m_pos = 0;
-	m_file = SD.open(filename, FILE_READ);
+	m_file = SD.open(filename, mode);
 }
 
 void INI::writeSection(String section)
@@ -49,6 +49,21 @@ void INI::write(String key, bool val)
 		m_file.print("true");
 	else
 		m_file.print("false");
+	m_file.println();
+}
+
+void INI::write(String key, const char *val)
+{
+	m_file.print(key);
+	m_file.print(" = ");
+	int i = 0;
+	char c;
+	do
+	{
+		c = val[i++];
+		m_file.print(c);
+	}
+	while(c != '\0');
 	m_file.println();
 }
 
