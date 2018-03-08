@@ -168,8 +168,8 @@ bool INI::getValues(String section, String **data, int *count)
 				{
 					break;
 				}
-				while(m_buffer[m_buffPos] != '='  && m_buffPos < BUFFER_SIZE) { m_buffPos++; }
-				if (m_buffPos < BUFFER_SIZE - 1)
+				while(m_buffer[m_buffPos] != '='  && m_buffPos < INI_BUFFER_SIZE) { m_buffPos++; }
+				if (m_buffPos < INI_BUFFER_SIZE - 1)
 					m_buffPos++;
 				skipWhiteSpaces();
 				(*data)[i++] = String(&m_buffer[m_buffPos]);
@@ -227,7 +227,7 @@ bool INI::readLine()
 {
 	if (!m_file.seek(m_pos))
 		return false;
-	size_t bytesRead = m_file.read(m_buffer, BUFFER_SIZE);
+	size_t bytesRead = m_file.read(m_buffer, INI_BUFFER_SIZE);
 	m_buffPos = 0;
 	
 	if (!bytesRead) 

@@ -3,7 +3,7 @@
 #include "Arduino.h"
 #include "SD.h"
 
-#define BUFFER_SIZE 64
+#define INI_BUFFER_SIZE 64
 
 class INI
 {
@@ -47,6 +47,6 @@ private:
 	mutable File m_file;
 	size_t m_pos;
 	int m_buffPos;
-	char m_buffer[BUFFER_SIZE];
+	char m_buffer[INI_BUFFER_SIZE];
 	bool m_caseSensitive;
 };
