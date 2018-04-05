@@ -139,7 +139,7 @@ bool INI::getValue(String section, String key, bool &val)
 	return false;
 }
 
-bool INI::getValues(String section, String **data, int *count)
+bool INI::getValues(String section, String **keys, String **values, int *count)
 {
 	*count = 0;
 	if (findSection(section))
@@ -154,10 +154,11 @@ bool INI::getValues(String section, String **data, int *count)
 				break;
 			}
 			//make sure we add no empty lines !!!
-			if (m_buffer[m_buffPos] != '\0')
+			if (c != '\0')
 				(*count)++;
 		}
-		*data = new String[*count];
+		*keys = new String[*count];
+		*values = new String[*count];
 		m_pos = pos;
 		while(readLine())
 		{
@@ -168,11 +169,18 @@ bool INI::getValues(String section, String **data, int *count)
 				{
 					break;
 				}
-				while(m_buffer[m_buffPos] != '='  && m_buffPos < INI_BUFFER_SIZE) { m_buffPos++; }
-				if (m_buffPos < INI_BUFFER_SIZE - 1)
+				int j = 0;
+				pos = m_buffPos;
+				while(m_buffer[m_buffPos] != '=' && m_buffPos < (INI_BUFFER_SIZE - 1)) 
+				{ 
+					m_buffPos++;
+				}
+				m_buffer[m_buffPos - 1] = '\0';
+				(*keys)[i] = String(&m_buffer[pos]);
+				if (m_buffPos < (INI_BUFFER_SIZE - 1))
 					m_buffPos++;
 				skipWhiteSpaces();
-				(*data)[i++] = String(&m_buffer[m_buffPos]);
+				(*values)[i++] = String(&m_buffer[m_buffPos]);
 			}
 		}
 		return true;
@@ -195,7 +203,10 @@ bool INI::findSection(String section)
 		{
 			m_buffPos++; // skip the [
 			if (match(section))
+			{
+				m_buffPos++; //skip the ]
 				return true;
+			}
 		}
 	}
 	return false;

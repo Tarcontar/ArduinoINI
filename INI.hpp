@@ -25,7 +25,7 @@ public:
 	bool getValue(String section, String key, float &val);
 	bool getValue(String section, String key, bool &val);
 	
-	bool getValues(String section, String **data, int *count);
+	bool getValues(String section, String **keys, String **values, int *count);
 	
 	void close();
 private:
